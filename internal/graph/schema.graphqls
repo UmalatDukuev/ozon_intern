@@ -1,28 +1,37 @@
-# GraphQL schema example
-#
-# https://gqlgen.com/getting-started/
-
-type Todo {
-  id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
-}
-
-type User {
-  id: ID!
-  name: String!
-}
-
 type Query {
-  todos: [Todo!]!
-}
-
-input NewTodo {
-  text: String!
-  userId: String!
+    posts: [Post!]!
+    post(id: ID!): Post
 }
 
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
+    createPost(input: NewPost!): Post!
+    createComment(input: NewComment!): Comment!
+}
+
+type Post {
+    id: ID!
+    title: String!
+    content: String!
+    comments: [Comment!]!
+    commentsEnabled: Boolean!
+}
+
+type Comment {
+    id: ID!
+    postId: ID!
+    content: String!
+    parentId: ID
+    children: [Comment!]!
+}
+
+input NewPost {
+    title: String!
+    content: String!
+    commentsEnabled: Boolean!
+}
+
+input NewComment {
+    postId: ID!
+    content: String!
+    parentId: ID
 }
